@@ -1,19 +1,18 @@
 import asyncio
 from code import interact
 from doctest import debug_script
-import os
-import random
 import math
 from tabnanny import check
 import time
 from threading import Timer
 import discord
-from discord.ext import commands
 from discord.ui import Button, View
+from discord.ext import commands
 from discord.commands import Option
 from sqlalchemy import desc
-from os import path
 from config import *
+from commands.inventory import *
+from commands.summon import *
 from ellia_token import TOKEN
 
 class currentPage():
@@ -21,7 +20,6 @@ class currentPage():
         self.page = 0
 
 test_server = ["976120059598610462"]
-box_path = "Users/User_bestiary/"
 cd = time.time()
 guild_cd = {}
 
@@ -48,8 +46,7 @@ async def changelog(ctx):
     embed.add_field(name=f'[v0.7]', inline=False, value=f'- Ajout de plusieurs filtres pour le bestiaire (élément, grade, invocateur)')
     embed.add_field(name=f'[v0.8]', inline=False, value=f'- Ajout d\'un journal de de modifications **/news**\n- N\'affiche plus **Dupe** lors que t\'obtiens un dupe')
     embed.add_field(name=f'[v0.9]', inline=False, value=f'- Options pour afficher uniquement les L&D ou élementaires **/box**\n- Pagination pour voir le bestiaire entier\n- Numérotation des pages\n- Problème de pagination résolu')
-    embed.add_field(name=f'[En développement]', inline=False, value=f'- Différents types d\'affichage pour le bestiaire')
-    path = "Source/changelog.png"
+    path = ASSETS_PATH + "changelog.png"
     file = discord.File(path, filename="image.png")
     embed.set_thumbnail(url = "attachment://" + "image.png")
     await ctx.respond(embed = embed, file=file)
@@ -72,10 +69,9 @@ async def help(ctx):
     await ctx.respond(embed = embed)
 
 @bot.slash_command(name='box', description='Affiche le bestiaire (nom des monstres)')
-async def box(ctx, name: Option(discord.Member, "Nom de l'invocateur", required = False, default = ''),
-mode: Option(str, "Mode d'affichage", required = False, default = 'texte', choices=['texte', 'image']),
-element: Option(str, "Choisir un élément", required = False, default="", choices=["[Fire]\n", "[Wind]\n", "[Water]\n", "[Light]\n", "[Dark]\n", "Light & Dark", "Elementaires"]),
-grade: Option(str, "Choisir un grade", required = False, default="", choices = ["3", "4", "5"])):
+async def box(ctx, name: Option(discord.Member, "Nom de l'invocateur", required = False, default = ''), # type: ignore
+element: Option(str, "Choisir un élément", required = False, default="", choices=["[Fire]\n", "[Wind]\n", "[Water]\n", "[Light]\n", "[Dark]\n", "Light & Dark", "Elementaires"]), # type: ignore
+grade: Option(str, "Choisir un grade", required = False, default="", choices = ["3", "4", "5"])): # type: ignore
     user = ""
     userid = ""
     avatar = ""
@@ -104,7 +100,7 @@ grade: Option(str, "Choisir un grade", required = False, default="", choices = [
         emb.set_thumbnail(url = avatar)    
         await ctx.respond(embed = emb)
         return
-    f = open(box_path + userid, 'r')
+    f = open(USER_BESTIARY_PATH + userid, 'r')
     count_mob = 0
     for i in f:
         count+=1
@@ -173,5 +169,106 @@ grade: Option(str, "Choisir un grade", required = False, default="", choices = [
         await ctx.respond(embed = embeds[0], view=view1)
     else:
         await ctx.respond(embed = embeds[0])
+
+@bot.slash_command(name='vl', description='Utilise un vélin légendaire (toutes les 10 minutes)')
+@commands.cooldown(1, 600, commands.BucketType.user)
+async def velin_legendaire(ctx):
+    scroll = "<:ellia_vl:976796784900853771>"
+    star = "<:ellia_star:976853657540767835>"
+    userid = str(ctx.author.id)
+    check_user(userid)
+    pseudo = ctx.author.display_name
+    mob = summon_vl()
+    new = ""
+    if is_new([userid, mob]) == 0:
+        new = " **(New)**"
+    data = [userid, mob]
+    save_bestiary(data)
+    couleur = discord.Color.red()
+    if get_element(mob) == "[Fire]\n":
+        couleur = discord.Color.red()
+    if get_element(mob) == "[Water]\n":
+        couleur = discord.Color.blue()
+    if get_element(mob) == "[Wind]\n":
+        couleur = discord.Color.orange()
+    stars = get_grade(mob)
+    embed = discord.Embed(description = f"**{pseudo}** a obtenu : \n**{mob}** {stars}{new}", color = couleur, title = f"Invocation légendaire {scroll}")
+    path = "assets/Monsters/Units/" + mob + ".jpg"
+    file = discord.File(path, filename="image.png")
+    embed.set_thumbnail(url = "attachment://" + "image.png")
+    if stars == f'{star}{star}{star}{star}{star}':
+        message = await ctx.send("https://tenor.com/view/summoners-war-lightning-summoners-war-lightning-summoners-war-summon-summon-gif-17920540")
+        await ctx.defer()
+        await asyncio.sleep(2)
+        await message.delete()
+        await ctx.respond(embed=embed, file = file)
+    else:
+        await ctx.respond(embed = embed, file = file)
+
+@bot.slash_command(name='ld', description='Utilise un vélin light & dark (toutes les 5 minutes)')
+@commands.cooldown(1, 300, commands.BucketType.user)
+async def velin_ld(ctx):
+    scroll = "<:ellia_ld:976796844925546566>"
+    star = "<:ellia_star:976853657540767835>"
+    userid = str(ctx.author.id)
+    check_user(userid)
+    pseudo = ctx.author.display_name
+    mob = summon_ld()
+    if is_new([userid, mob]) == 0:
+        new = " **(New)**"
+    else:
+        new = ""
+    data = [userid, mob]
+    save_bestiary(data)
+    couleur = discord.Color.dark_purple()
+    if get_element(mob) == "[Light]\n":
+        couleur = discord.Color.from_rgb(255, 255, 255)
+    if get_element(mob) == "[Dark]\n":
+        couleur = discord.Color.dark_purple()
+    stars = get_grade(mob)
+    embed = discord.Embed(description = f"**{pseudo}** a obtenu : \n**{mob}** {stars}{new}", color = couleur, title = f"Invocation light and dark {scroll}")
+    path = "assets/Monsters/Units/" + mob + ".jpg"
+    file = discord.File(path, filename="image.png")
+    embed.set_thumbnail(url = "attachment://" + "image.png")
+    if stars == f'{star}{star}{star}':
+        await ctx.respond(embed = embed, file = file)
+    else:
+        message = await ctx.send("https://tenor.com/view/summoners-war-lightning-summoners-war-lightning-summoners-war-summon-summon-gif-17920540")
+        await ctx.defer()
+        await asyncio.sleep(2)
+        await message.delete()
+        await ctx.respond(embed=embed, file = file)
+
+@bot.slash_command(name='trans', description='Utilise un vélin transcendance (toutes les 60 minutes)')
+@commands.cooldown(1, 3600, commands.BucketType.user)
+async def velin_trans(ctx):
+    scroll = "<:ellia_trans:976796872020721705>"
+    userid = str(ctx.author.id)
+    check_user(userid)
+    pseudo = ctx.author.display_name
+    mob = summon_trans()
+    if is_new([userid, mob]) == 0:
+        new = "**(New)**"
+    else:
+        new = ""
+    data = [userid, mob]
+    save_bestiary(data)
+    couleur = discord.Color.default()
+    if get_element(mob) == "[Fire]\n":
+        couleur = discord.Color.red()
+    if get_element(mob) == "[Water]\n":
+        couleur = discord.Color.blue()
+    if get_element(mob) == "[Wind]\n":
+        couleur = discord.Color.orange()
+    stars = get_grade(mob)
+    embed = discord.Embed(description = f"**{pseudo}** a obtenu : \n**{mob}** {stars}{new}", color = couleur, title = f"Invocation transcendance {scroll}")
+    path = "assets/Monsters/Units/" + mob + ".jpg"
+    file = discord.File(path, filename="image.png")
+    embed.set_thumbnail(url = "attachment://" + "image.png")
+    message = await ctx.send("https://tenor.com/view/summoners-war-lightning-summoners-war-lightning-summoners-war-summon-summon-gif-17920540")
+    await ctx.defer()
+    await asyncio.sleep(2)
+    await message.delete()
+    await ctx.respond(embed=embed, file = file)
 
 bot.run(TOKEN)
