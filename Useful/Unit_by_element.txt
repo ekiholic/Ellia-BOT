@@ -72,7 +72,6 @@ Einheri
 Magnum
 Emily
 Phenaka
-가고일(빛)
 Dongbaek
 DHALSIM
 CHUN-LI
@@ -105,7 +104,6 @@ Oberon
 Tian Lang
 Celia
 Eleanor
-Homunculus(Support)
 Elsharion
 Jeanne
 Valantis
@@ -114,8 +112,6 @@ Lucifer
 Narsha
 Narsha
 Hanwul
-RYU
-M. BISON
 Talisman
 Craig
 Seimei
@@ -198,7 +194,6 @@ Einheri
 Magnum
 Emily
 Phenaka
-가고일(빛)
 Dongbaek
 DHALSIM
 CHUN-LI
@@ -243,10 +238,7 @@ Eirgar
 Beelzebub
 Xiana
 Xiana
-데몬(어둠)
 Mookwol
-RYU
-M. BISON
 Vancliffe
 Gurkha
 Douman
@@ -294,7 +286,6 @@ Nisha
 Carcano
 Scarlett
 Kunite
-가고일(불)
 Hongyeon
 DHALSIM
 CHUN-LI
@@ -332,9 +323,7 @@ Bael
 Masha
 Masha
 Jeogun
-RYU
 KEN
-M. BISON
 Douglas
 Bernadotte
 Karnal
@@ -382,7 +371,6 @@ Herne
 Covenant
 Abigail
 Tanzaite
-가고일(물)
 Songseol
 DHALSIM
 CHUN-LI
@@ -390,7 +378,6 @@ Kyle
 Lariel
 Suiki
 ROBO-R40
-ROBO(물)_잔해
 Susan
 Birman
 Ariel
@@ -420,10 +407,7 @@ Bolverk
 Belial
 Barbara
 Barbara
-데몬(물)
 Haegang
-RYU
-M. BISON
 Moore
 Borgnine
 Shizuka
@@ -471,7 +455,6 @@ Mellia
 Skogul
 Carbine
 Malite
-가고일(바람)
 Yeonhwa
 DHALSIM
 CHUN-LI
@@ -510,8 +493,6 @@ Mephisto
 Savannah
 Savannah
 Cheongpung
-RYU
-M. BISON
 Kashmir
 Sagar
 Giou

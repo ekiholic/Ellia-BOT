@@ -58,3 +58,10 @@ def summon_trans():
     while name[0] == '.':
         name = random.choice(os.listdir("assets/Monsters/5_elem"))
     return(name)
+
+def summon_trans_ld():
+    name = ""
+    name = random.choice(os.listdir("assets/Monsters/5_ld"))
+    while name[0] == '.':
+        name = random.choice(os.listdir("assets/Monsters/5_ld"))
+    return(name)

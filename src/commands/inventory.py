@@ -8,6 +8,17 @@ def save_bestiary(id):
     with open(box_path + id[0], 'a') as f:
         f.write(id[1] + "\n")
 
+def check_mob(userid, mob):
+    with open("Useful/Unit_by_element.txt", "r", encoding="utf-8") as f:
+        list = f.readlines()
+    if mob+'\n' not in list: 
+        return 2
+    with open(box_path + userid, "r") as f:
+        lines = f.readlines()
+    if mob+'\n' not in lines:
+        return 1
+    else:
+        return 0
 
 def get_elem_emote(elem):
     if elem == "[Light]\n":
@@ -69,3 +80,19 @@ def sort_monster(element, etoile, mob):
         if grade != get_grade(mob):
             return (1)
     return (0)
+
+def delete_mob(userid, mob):
+    done = 0
+
+    with open(box_path + userid, "r") as f:
+        lines = f.readlines()
+    with open(box_path + userid, "w") as f:
+        for line in lines:
+            if line.lower() != mob.lower()+"\n":
+                f.write(line)
+            if line.lower() == mob.lower()+"\n":
+                if done == 1:
+                    f.write(line)
+                else:
+                    done = 1
+    return
