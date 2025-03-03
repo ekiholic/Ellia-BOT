@@ -15,19 +15,19 @@ def jprint(obj):
 
 def main():
     img = "https://swarfarm.com/static/herders/images/monsters/"
-    path = "/Users/ccheng/Desktop/Projet/BOT/Monsters"
-    light_3 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=3&element=light&awaken_level=1"
-    dark_3 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=3&element=dark&awaken_level=1"
-    fire_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=fire&awaken_level=1"
-    water_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=water&awaken_level=1"
-    wind_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=wind&awaken_level=1"
-    light_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=light&awaken_level=1"
-    dark_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=dark&awaken_level=1"
-    fire_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=fire&awaken_level=1"
-    water_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=water&awaken_level=1"
-    wind_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=wind&awaken_level=1"
-    dark_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=dark&awaken_level=1"
-    light_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=light&awaken_level=1"
+    path = "assets/Monsters/"
+    light_3 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=3&element=light&awaken_level=1&can_awaken=true"
+    dark_3 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=3&element=dark&awaken_level=1&can_awaken=true"
+    fire_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=fire&awaken_level=1&can_awaken=true"
+    water_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=water&awaken_level=1&can_awaken=true"
+    wind_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=wind&awaken_level=1&can_awaken=true"
+    light_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=light&awaken_level=1&can_awaken=true"
+    dark_4 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=4&element=dark&awaken_level=1&can_awaken=true"
+    fire_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=fire&awaken_level=1&can_awaken=true"
+    water_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=water&awaken_level=1&can_awaken=true"
+    wind_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=wind&awaken_level=1&can_awaken=true"
+    dark_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=dark&awaken_level=1&can_awaken=true"
+    light_5 = "https://swarfarm.com/api/v2/monsters/?page_size=30&natural_stars=5&element=light&awaken_level=1&can_awaken=true"
 
     f = open('Unit_by_element.txt', 'w+')
 
